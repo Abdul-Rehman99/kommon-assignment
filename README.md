@@ -38,7 +38,7 @@ An end-to-end AI-powered application that allows users to register, log in, subm
 ### ⚙️ Setup Instructions
 
 ```bash
-git clone https://github.com/your-username/ai-feedback-app.git
+git clone https://github.com/your-username/kommon-assignment.git
 cd kommon-assignment
 cd client && npm run dev
 cd server && npm run dev
