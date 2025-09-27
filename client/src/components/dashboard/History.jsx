@@ -1,5 +1,7 @@
-import { useState } from 'react';
-import { Clock } from 'lucide-react';
+import { useState } from "react";
+import { Clock } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 // History Component
 const History = ({ history, loading }) => {
@@ -14,7 +16,7 @@ const History = ({ history, loading }) => {
 
   const truncateText = (text, limit = 150) => {
     if (text.length <= limit) return text;
-    return text.slice(0, limit) + '...';
+    return text.slice(0, limit) + "...";
   };
 
   if (loading) {
@@ -44,7 +46,9 @@ const History = ({ history, loading }) => {
       </h2>
 
       {history.length === 0 ? (
-        <p className="text-gray-500 text-center py-8">No feedback history yet</p>
+        <p className="text-gray-500 text-center py-8">
+          No feedback history yet
+        </p>
       ) : (
         <div className="space-y-4 max-h-96 overflow-y-auto">
           {history.slice(0, 5).map((item, index) => {
@@ -54,7 +58,10 @@ const History = ({ history, loading }) => {
               : truncateText(item.feedback);
 
             return (
-              <div key={item._id || index} className="border-l-4 border-blue-500 pl-4 py-2">
+              <div
+                key={item._id || index}
+                className="border-l-4 border-blue-500 pl-4 py-2"
+              >
                 <p className="text-sm font-medium text-gray-900 mb-1">
                   {item.user_input}
                 </p>
@@ -62,13 +69,15 @@ const History = ({ history, loading }) => {
                   {new Date(item.createdAt).toLocaleDateString()}
                 </p>
                 <p className="text-sm text-gray-700 whitespace-pre-wrap prose prose-sm bg-gray-50 p-2 rounded">
-                  {feedbackText}
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {feedbackText}
+                  </ReactMarkdown>
                   {item.feedback.length > 150 && (
                     <button
                       onClick={() => toggleExpand(item._id || index)}
                       className="text-blue-500 ml-2 text-sm hover:underline"
                     >
-                      {isExpanded ? 'Read less' : 'Read more'}
+                      {isExpanded ? "Read less" : "Read more"}
                     </button>
                   )}
                 </p>

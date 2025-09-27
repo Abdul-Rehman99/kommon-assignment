@@ -5,6 +5,8 @@ import Button from "../ui/Button";
 import History from "./History";
 import ApiService from "../../services/ApiService";
 import AuthService from "../../services/AuthService";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 // Dashboard Component
 const Dashboard = ({ onLogout }) => {
@@ -52,6 +54,7 @@ const Dashboard = ({ onLogout }) => {
       toast.error(error.message);
     } finally {
       setLoadingFeedback(false);
+      setInput("");
     }
   };
 
@@ -126,7 +129,9 @@ const Dashboard = ({ onLogout }) => {
                 </h3>
                 <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
                   <div className="text-gray-800 whitespace-pre-wrap prose prose-sm max-w-none">
-                    {feedback}
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {feedback}
+                    </ReactMarkdown>
                   </div>
                 </div>
               </div>
